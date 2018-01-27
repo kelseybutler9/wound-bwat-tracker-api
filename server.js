@@ -12,8 +12,6 @@ const jsonParser = bodyParser.json();
 app.use(cors({origin: CLIENT_ORIGIN}));
 app.use(bodyParser.json());
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
-
 let server;
 
 function runServer () {

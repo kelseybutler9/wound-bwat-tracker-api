@@ -45,7 +45,7 @@ formSchema.methods.apiRepr = function () {
     };
 };
 
-const formSchema = mongoose.Schema({
+const clientSchema = mongoose.Schema({
     "first_name": String,
     "last_name": String,
     "hospital_name": String,
@@ -55,7 +55,7 @@ const formSchema = mongoose.Schema({
     "end_date": Date,
     "age": Number,
     "weight": Number
-)};
+});
 
 clientSchema.methods.apiRepr = function () {
     return {

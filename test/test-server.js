@@ -8,24 +8,12 @@ const newForm = require('./fixtures/new-form');
  const should = chai.should();
  chai.use(chaiHttp);
 
- describe('API', function() {
-
-   it('should 200 on GET requests', function() {
-     return chai.request(app)
-       .get('/api/fooooo')
-       .then(function(res) {
-         res.should.have.status(200);
-         res.should.be.json;
-       });
-   });
- });
-
 describe('Clients', function () {
-  before(function () {
+  beforeEach(function () {
     return runServer();
   });
 
-  after(function () {
+  afterEach(function () {
     return closeServer();
   });
 
@@ -35,23 +23,10 @@ describe('Clients', function () {
       .then(function (res) {
         res.should.have.status(200);
         res.should.be.json;
-        res.body.should.be.a('array');
+        res.body.should.be.an('array');
         res.body.should.have.length.of.at.least(1);
-
-
-        id: this._id,
-        first_name: this.first_name,
-        last_name: this.last_name,
-        hospital_name: this.hospital_name,
-        city: this.city,
-        client_state: this.client_state,
-        start_date: this.start_date,
-        end_date: this.end_date,
-        age: this.age,
-        weight: this.weight
-
         res.body.forEach(function (item) {
-          item.should.be.a('object');
+          item.should.be.an('object');
           item.should.include.keys('id', 'first_name', 'last_name', 'city', 'client_state', 'start_date', 'end_date', 'age', 'weight');
         });
       });
@@ -72,8 +47,8 @@ describe('Clients', function () {
         res.body.client_state.should.be.a('string');
         res.body.start_date.should.be.a('string');
         res.body.end_date.should.be.a('string');
-        res.body.age.should.be.a('string');
-        res.body.weight.should.be.a('string');
+        res.body.age.should.be.a('number');
+        res.body.weight.should.be.a('number');
 
         res.body.first_name.should.equal(newClient.first_name);
         res.body.last_name.should.equal(newClient.last_name);
@@ -85,14 +60,14 @@ describe('Clients', function () {
         res.body.weight.should.equal(newClient.weight);
       });
   });
-
+});
 
   describe('Forms', function () {
-    before(function () {
+    beforeEach(function () {
       return runServer();
     });
 
-    after(function () {
+    afterEach(function () {
       return closeServer();
     });
 
@@ -107,8 +82,8 @@ describe('Clients', function () {
 
           res.body.forEach(function (item) {
             item.should.be.a('object');
-            item.should.include.keys('id', 'client_id', 'date_of_form', 'wound_location', 'shape_of_wound', 'question_one', 'question_two', 'question_three', 'question_four', 'question_five', 'question_six', 'question_seven', 'question_eight', 'question_nine', 'question_ten', 'question_eleven', 'question_twelve', 'question_thirteen', 'score');
-          });
+            item.should.include.keys('id', 'client_id', 'date_of_form', 'wound_location', 'shape_of_wound', 'question_one', 'question_two', 'question_three', 'question_four', 'question_five', 'question_six', 'question_seven', 'question_eight', 'question_nine', 'question_ten', 'question_eleven', 'question_twelve', 'question_thirteen', 'score'
+          )});
         });
     });
 
@@ -119,30 +94,46 @@ describe('Clients', function () {
         .then(function (res) {
           res.should.have.status(201);
           res.should.be.json;
-          res.body.should.be.a('object');
-          res.body.should.include.keys('id', 'client_id', 'date_of_form', 'wound_location', 'shape_of_wound', 'question_one', 'question_two', 'question_three', 'question_four', 'question_five', 'question_six', 'question_seven', 'question_eight', 'question_nine', 'question_ten', 'question_eleven', 'question_twelve', 'question_thirteen', 'score');
-          res.body.client_id.should.be.a('string');
-          res.body.date_of_form.should.be.a('string');
-          res.body.startDate.should.be.a('string');
-          res.body.endDate.should.be.a('string');
+          res.body.should.be.an('object');
+          res.body.should.include.keys(
+            'id',
+            'client_id',
+            'date_of_form',
+            'wound_location',
+            'shape_of_wound',
+            'question_one',
+            'question_two',
+            'question_three',
+            'question_four',
+            'question_five',
+            'question_six',
+            'question_seven',
+            'question_eight',
+            'question_nine',
+            'question_ten',
+            'question_eleven',
+            'question_twelve',
+            'question_thirteen',
+            'score'
+          );
           res.body.client_id.should.be.a('string');
           res.body.date_of_form.should.be.a('string');
           res.body.wound_location.should.be.a('string');
           res.body.shape_of_wound.should.be.a('string');
-          res.body.question_one.should.be.a('string');
-          res.body.question_two.should.be.a('string');
-          res.body.question_three.should.be.a('string');
-          res.body.question_four.should.be.a('string');
-          res.body.question_five.should.be.a('string');
-          res.body.question_six.should.be.a('string');
-          res.body.question_seven.should.be.a('string');
-          res.body.question_eight.should.be.a('string');
-          res.body.question_nine.should.be.a('string');
-          res.body.question_ten.should.be.a('string');
-          res.body.question_eleven.should.be.a('string');
-          res.body.question_twelve.should.be.a('string');
-          res.body.question_thirteen.should.be.a('string');
-          res.body.score.should.be.a('string');
+          res.body.question_one.should.be.a('number');
+          res.body.question_two.should.be.a('number');
+          res.body.question_three.should.be.a('number');
+          res.body.question_four.should.be.a('number');
+          res.body.question_five.should.be.a('number');
+          res.body.question_six.should.be.a('number');
+          res.body.question_seven.should.be.a('number');
+          res.body.question_eight.should.be.a('number');
+          res.body.question_nine.should.be.a('number');
+          res.body.question_ten.should.be.a('number');
+          res.body.question_eleven.should.be.a('number');
+          res.body.question_twelve.should.be.a('number');
+          res.body.question_thirteen.should.be.a('number');
+          res.body.score.should.be.a('number');
 
           res.body.client_id.should.equal(newForm.client_id);
           res.body.date_of_form.should.equal(newForm.date_of_form);
@@ -164,3 +155,4 @@ describe('Clients', function () {
           res.body.score.should.equal(newForm.score);
         });
     });
+  });

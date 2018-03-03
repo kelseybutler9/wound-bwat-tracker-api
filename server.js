@@ -87,7 +87,7 @@ app.get('/forms/:id', (req, res) => {
 });
 
 app.get('/clients/:id', (req, res) => {
-  Form
+  Client
     .findById(req.params.id)
     .then(client => res.json(client.apiRepr()))
     .catch(err => {
